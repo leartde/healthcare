@@ -2,7 +2,7 @@
 
 namespace MachineLearningModel.DataEntities;
 
-public class HeartDiseasePrediction : HeartDiseaseData
+public class HeartDiseasePrediction 
 {
   [ColumnName("PredictedLabel")]
   public bool Prediction { get; set; }

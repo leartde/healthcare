@@ -4,7 +4,7 @@ namespace MachineLearningModel;
 
 public static class Predictor
 {
-  public static void UseModelWithSingleItem(MLContext context, ITransformer model,
+  public static HeartDiseasePrediction UseModelWithSingleItem(MLContext context, ITransformer model,
     HeartDiseaseData sampleData)
   {
     var predictionEngine
@@ -18,5 +18,6 @@ public static class Predictor
 
     Console.WriteLine("=============== End of Predictions ===============");
     Console.WriteLine();
+    return resultPrediction;
   }
 }

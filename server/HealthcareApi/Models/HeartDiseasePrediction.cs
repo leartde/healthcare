@@ -6,5 +6,6 @@ public class HeartDiseasePrediction
   public Patient? Patient { get; set; }
   public int PatientId { get; set; }
   public bool Label { get; set; }
+  public double Probability { get; set; }
   public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 }

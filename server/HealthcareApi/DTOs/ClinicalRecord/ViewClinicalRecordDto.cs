@@ -20,5 +20,4 @@ public class ViewClinicalRecordDto
   public string Slope { get; set; } = string.Empty;
   public int MajorVesselsColored { get; set; }
   public string Thalassemia { get; set; } = string.Empty;
-  public bool Target { get; set; }
 }
