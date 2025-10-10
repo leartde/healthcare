@@ -4,6 +4,7 @@ using HealthcareApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthcareApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251010155613_Appointments")]
+    partial class Appointments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,11 +139,11 @@ namespace HealthcareApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClinicalRecordId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Label")
                         .HasColumnType("bit");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
 
                     b.Property<double>("Probability")
                         .HasColumnType("float");
@@ -150,7 +153,7 @@ namespace HealthcareApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClinicalRecordId");
+                    b.HasIndex("PatientId");
 
                     b.ToTable("HeartDiseasePredictions");
                 });
@@ -230,13 +233,13 @@ namespace HealthcareApi.Migrations
 
             modelBuilder.Entity("HealthcareApi.Models.HeartDiseasePrediction", b =>
                 {
-                    b.HasOne("HealthcareApi.Models.ClinicalRecord", "ClinicalRecord")
+                    b.HasOne("HealthcareApi.Models.Patient", "Patient")
                         .WithMany()
-                        .HasForeignKey("ClinicalRecordId")
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ClinicalRecord");
+                    b.Navigation("Patient");
                 });
 #pragma warning restore 612, 618
         }

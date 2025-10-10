@@ -2,7 +2,7 @@
 
 public class AddHeartDiseasePredictionDto
 {
-  public int PatientId { get; set; }
+  public int RecordId { get; set; }
   public bool Label { get; set; }
   public double Probability { get; set; }
 }

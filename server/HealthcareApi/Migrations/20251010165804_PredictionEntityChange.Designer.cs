@@ -4,6 +4,7 @@ using HealthcareApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthcareApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251010165804_PredictionEntityChange")]
+    partial class PredictionEntityChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,7 +139,7 @@ namespace HealthcareApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClinicalRecordId")
+                    b.Property<int?>("ClinicalRecordId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Label")
@@ -144,6 +147,9 @@ namespace HealthcareApi.Migrations
 
                     b.Property<double>("Probability")
                         .HasColumnType("float");
+
+                    b.Property<int>("RecordId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
@@ -232,9 +238,7 @@ namespace HealthcareApi.Migrations
                 {
                     b.HasOne("HealthcareApi.Models.ClinicalRecord", "ClinicalRecord")
                         .WithMany()
-                        .HasForeignKey("ClinicalRecordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClinicalRecordId");
 
                     b.Navigation("ClinicalRecord");
                 });

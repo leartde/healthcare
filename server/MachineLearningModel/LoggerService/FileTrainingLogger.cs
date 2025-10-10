@@ -22,7 +22,7 @@ public class FileTrainingLogger : ITrainingLogger
     var logsPath = Path.Combine(projectRoot, "logs", "evaluation_metrics");
     Directory.CreateDirectory(logsPath);
     
-    _logsFilePath = Path.Combine(logsPath, $"training-{DateTime.Now:yyyyMMdd-HHmmss}.csv");
+    _logsFilePath = Path.Combine(logsPath, $"training-{DateTime.Now:yyyyMMdd-HHmmss}.txt");
   }
   public void LogInfo(string message)
   {

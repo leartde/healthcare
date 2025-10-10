@@ -30,15 +30,19 @@ public class HeartDiseasePredictionController : ControllerBase
   public async Task<IActionResult> GetPredictions()
   {
     var predictions = await _context.HeartDiseasePredictions
+      .Include(p => p.ClinicalRecord)
+      .ThenInclude(r => r!.Patient)
+      .Include(p => p.ClinicalRecord)
+      .ThenInclude(r => r!.RecordedByDoctor)
       .ToListAsync();
-    return Ok(predictions);
+    return Ok(predictions.Select(p => p.ToDto()));
   }
 
-  [HttpPost("record/{recordId}")]
+  [HttpPost("records/{recordId}")]
   public async Task<IActionResult> AddPrediction(int recordId)
   {
     var clinicalRecord = await _context.ClinicalRecords
-      .Where(cr => cr.Id.Equals(recordId))
+      .Where(cr => cr.Id == recordId)
       .Include(cr => cr.Patient)
       .SingleOrDefaultAsync();
     if (clinicalRecord is null) return BadRequest($"Clinical record with id:{recordId} not found.");
@@ -68,7 +72,7 @@ public class HeartDiseasePredictionController : ControllerBase
 
     var heartDiseasePrediction = new HeartDiseasePrediction
     {
-      PatientId = clinicalRecord.PatientId,
+      ClinicalRecordId = clinicalRecord.Id,
       Label = prediction.Prediction,
       Probability = prediction.Probability
     };
@@ -77,4 +81,37 @@ public class HeartDiseasePredictionController : ControllerBase
     await _context.SaveChangesAsync();
     return Ok(heartDiseasePrediction.ToDto());
   }
+
+  [HttpGet("{id}")]
+  public async Task<IActionResult> GetPrediction(int id)
+  {
+    var prediction = await _context.HeartDiseasePredictions
+      .Where(p => p.Id == id)
+      .Include(p => p.ClinicalRecord)
+      .ThenInclude(r => r!.Patient)
+      .Include(p => p.ClinicalRecord)
+      .ThenInclude(r => r!.RecordedByDoctor)
+      .SingleOrDefaultAsync();
+    if (prediction is null)
+    {
+      return BadRequest($"Heart disease prediction record with id: {id} not found.");
+    }
+
+    return Ok(prediction);
+  }
+
+  [HttpDelete("{id}")]
+  public async Task<IActionResult> DeletePrediction(int id)
+  {
+    var predictionToDelete = await _context.HeartDiseasePredictions.FindAsync(id);
+    if (predictionToDelete is null)
+    {
+      return BadRequest($"Heart disease prediction record with id: {id} not found.");
+    }
+
+    _context.HeartDiseasePredictions.Remove(predictionToDelete);
+    await _context.SaveChangesAsync();
+    return Ok($"Heart disease prediction record with id: {id} successfully deleted.");
+  }
+  
 }

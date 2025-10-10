@@ -10,7 +10,7 @@ public static class HeartDiseasePredictionMapping
     return new ViewHeartDiseasePredictionDto
     {
       Id = entity.Id,
-      Patient = entity.Patient?.ToDto(),
+      ClinicalRecord = entity.ClinicalRecord?.ToDto(),
       Label = entity.Label,
       Probability = entity.Probability,
       Timestamp = entity.Timestamp
@@ -21,7 +21,7 @@ public static class HeartDiseasePredictionMapping
   {
     return new HeartDiseasePrediction
     {
-      PatientId = dto.PatientId,
+      ClinicalRecordId = dto.RecordId,
       Label = dto.Label,
       Probability = dto.Probability
     };
