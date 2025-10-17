@@ -13,7 +13,7 @@ const Appointments = () => {
     getAppointments().then();
   }, []);
   return (
-    <div className="p-6">
+    <>
       <h2 className="text-2xl font-bold text-green-800 mb-4">Appointments</h2>
       <div className="overflow-x-auto rounded-lg text-green-800 mb-4">
         <Table headers={["Id", "Patient Name", "Doctor Name", "Date"]}
@@ -30,7 +30,7 @@ const Appointments = () => {
 
       </div>
 
-    </div>
+    </>
   );
 };
 

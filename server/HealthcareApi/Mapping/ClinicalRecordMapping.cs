@@ -1,5 +1,4 @@
 ﻿using HealthcareApi.DTOs.ClinicalRecord;
-using HealthcareApi.DTOs.MedicalHistory;
 using HealthcareApi.Helpers;
 using HealthcareApi.Models;
 using MachineLearningModel.DataEntities;
@@ -28,6 +27,8 @@ public static class ClinicalRecordMapping
       Slope = entity.Slope.ToString(),
       MajorVesselsColored = entity.MajorVesselsColored,
       Thalassemia = entity.Thalassemia.GetDisplayName(),
+      Label = entity.Label,
+      Probability = entity.Probability,
     };
   }
 
@@ -39,7 +40,7 @@ public static class ClinicalRecordMapping
       RecordedByDoctorId = dto.RecordedByDoctorId,
       ChestPainType = dto.ChestPainType,
       RestingBloodPressure = dto.RestingBloodPressure,
-      CholesterolTotal = dto.Cholesterol_Total,
+      CholesterolTotal = dto.CholesterolTotal,
       FastingBloodSugar = dto.FastingBloodSugar >= 120,
       RestEcg = dto.RestECG,
       MaximumHeartRate = dto.MaximumHeartRate,

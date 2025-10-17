@@ -8,7 +8,9 @@ import Doctors from "./Pages/Doctors.tsx";
 import Patients from "./Pages/Patients.tsx";
 import Appointments from "./Pages/Appointments.tsx";
 import ClinicalRecords from "./Pages/ClinicalRecords.tsx";
-import DiseasePredictions from "./Pages/DiseasePredictions.tsx";
+import ClinicalRecord from "./Pages/ClinicalRecord.tsx";
+import AddClinicalRecord from "./Pages/AddClinicalRecord.tsx";
+import AddPatient from "./Pages/AddPatient.tsx";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +32,14 @@ const router = createBrowserRouter([
         path:"/clinical-records", element:<ClinicalRecords />
       },
       {
-        path: "/predictions", element:<DiseasePredictions/>
+        path: "/clinical-records/:id",element:<ClinicalRecord/>
+      },
+      {
+        path: "clinical-records/add", element:<AddClinicalRecord/>
+      },
+
+      {
+        path: "patients/add", element:<AddPatient/>
       }
     ]
   }

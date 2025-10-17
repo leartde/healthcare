@@ -17,4 +17,6 @@ export type ClinicalRecord = {
   slope: "Upsloping" | "Flat" | "Downsloping";
   majorVesselsColored: 0 | 1 | 2 | 3;
   thalassemia: "Error" | "Normal" | "Fixed Defect" | "Reversible Defect";
+  probability: number;
+  label: boolean;
 }

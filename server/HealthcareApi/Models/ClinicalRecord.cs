@@ -21,4 +21,6 @@ public class ClinicalRecord
   public Slope Slope { get; set; } // the slope of the peak exercise ST segment
   public int MajorVesselsColored { get; set; } // 0-3
   public Thalassemia Thalassemia  { get; set; }
+  public bool Label { get; set; }
+  public double Probability { get; set; }
 }

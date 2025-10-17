@@ -1,7 +1,7 @@
 ﻿using HealthcareApi.DTOs.Doctor;
 using HealthcareApi.DTOs.Patient;
 
-namespace HealthcareApi.DTOs.MedicalHistory;
+namespace HealthcareApi.DTOs.ClinicalRecord;
 
 public class ViewClinicalRecordDto
 {
@@ -20,4 +20,6 @@ public class ViewClinicalRecordDto
   public string Slope { get; set; } = string.Empty;
   public int MajorVesselsColored { get; set; }
   public string Thalassemia { get; set; } = string.Empty;
+  public bool Label { get; set; }
+  public double Probability { get; set; }
 }

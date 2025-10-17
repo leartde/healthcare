@@ -13,7 +13,7 @@ const Doctors = () => {
     getDoctors().then()
   },[]);
   return (
-    <div className="p-6">
+    <>
       <h2 className="text-2xl font-bold text-green-800 mb-4">Doctor Records</h2>
 
       <div className="overflow-x-auto rounded-lg shadow-md">
@@ -26,7 +26,7 @@ const Doctors = () => {
         />
 
       </div>
-    </div>
+    </>
   );
 };
 

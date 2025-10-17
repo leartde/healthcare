@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Table from "../Components/Table.tsx";
 import type { ClinicalRecord } from "../Types/ClinicalRecord.ts";
 import FetchAllClinicalRecords from "../Services/ClinicalRecord/FetchAllClinicalRecords.ts";
+import { Link } from "react-router";
+import DeleteClinicalRecord from "../Services/ClinicalRecord/DeleteClinicalRecord.ts";
 
 const ClinicalRecords = () => {
   const [clinicalRecords, setClinicalRecords] = useState<ClinicalRecord[]>([]);
@@ -12,36 +14,39 @@ const ClinicalRecords = () => {
     }
     getClinicalRecords().then();
   }, []);
+
+  const handleDelete = (id: number) => async () => {
+   const res = await DeleteClinicalRecord(id)
+    if(res){
+      setClinicalRecords(clinicalRecords.filter(record => record.id !== id));
+    }
+  }
   return (
-    <div className="p-6">
+    <>
       <h2 className="text-2xl font-bold text-green-800 mb-4">Clinical Records</h2>
       <div className="overflow-x-auto rounded-lg text-green-800 mb-4">
      <Table
-      headers={['Id','Patient Name', 'Recorded By Doctor', 'Recorded Date', 'Patient Sex', 'Chest Pain Type', 'Resting Blood Pressure', 'Cholesterol Total', 'Fasting Blood Sugar', 'Rest ECG', 'Maximum Heart Rate', 'Exercise Induced Angina', 'Old Peak', 'Slope', 'Major Vessels Colored', 'Thalassemia']}
+      headers={['Id','Patient Name', 'Recorded By Doctor', 'Recorded Date', 'Patient Sex', 'Probability', 'Label', '','']}
       rows={clinicalRecords.map((record) => ([
         record.id,
         `${record.patient.firstName} ${record.patient.lastName}`,
         `${record.recordedByDoctor.firstName} ${record.recordedByDoctor.lastName}`,
         new Date(record.recordedDate).toLocaleDateString(),
         record.patient.sex,
-        record.chestPainType,
-        record.restingBloodPressure,
-        record.cholesterolTotal,
-        record.fastingBloodSugar ? 'True' : 'False',
-        record.restEcg,
-        record.maximumHeartRate,
-        record.exerciseInducedAngina ? 'True' : 'False',
-        record.oldPeak,
-        record.slope,
-        record.majorVesselsColored,
-        record.thalassemia
+        record.probability.toFixed(2) * 100  + '%',
+        record.label ? 'True' : 'False',
+        <Link to={`${record.id}`} className="text-gray-900"> Click here to view full details </Link>,
+        <button onClick={handleDelete(record.id)} className="bg-red-600 cursor-pointer hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2"> Delete </button>
       ]))}
      />
-
       </div>
 
-
+      <div className="p-2 mt-2">
+           <Link to="add" className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+             Add new clinical record
+           </Link>
       </div>
+      </>
   );
 };
 
